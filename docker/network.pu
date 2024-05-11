@@ -1,0 +1,44 @@
+@startuml docker
+!include theme.pu
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.1/sprites
+!includeurl SPRITESURL/docker.puml
+
+node Docker {
+  port p1
+  node Nginx_Container {
+    port p2
+  }
+  node PHP_Container {
+    port p3
+  }
+  node Compose1 {
+    port p8
+    node PHP_Container as PHP_Compose1{
+      port p5
+    }
+  }
+  node Compose2 {
+    port p9
+    node PostGres_Container {
+      port p6
+    }
+  }
+  node Docker_Engine #DodgerBlue
+  p2 <--> p3: bridge network
+  p8 <--> p9: external network
+  Compose1 -- Docker_Engine
+  Compose2 -- Docker_Engine
+  Nginx_Container -- Docker_Engine
+  PHP_Container -- Docker_Engine
+}
+
+node Docker2 {
+  port p4
+  node DB_Container
+  node Docker_Engine as Docker_Engine_other #DodgerBlue
+  DB_Container -- Docker_Engine_other
+}
+
+p1 <--> p4: overlay Network
+
+@enduml

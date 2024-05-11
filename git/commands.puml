@@ -1,0 +1,20 @@
+@startuml git_merge
+
+' !theme sketchy
+!theme reddress-darkorange
+' !theme reddress-darkblue
+' !theme blueprint
+
+hide footbox
+
+box "Git Merge"
+  entity main as main
+  entity dev as dev
+end box
+
+box "Git reset"
+  entity main as main
+  entity main as main2
+end box
+
+@enduml

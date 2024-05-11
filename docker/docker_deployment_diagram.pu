@@ -1,0 +1,79 @@
+' Deployment Diagram: https://plantuml.com/ja/deployment-diagram
+
+@startuml docker
+!include theme.pu
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.1/sprites
+!includeurl SPRITESURL/docker.puml
+
+<style>
+componentDiagram {
+  LineColor DarkGray
+}
+</style>
+
+node DockerHub {
+  rectangle image
+}
+
+node Docker {
+  node Container {
+    ' 既存のイメージにレイヤーをさらに積み重ねるためのテキストファイル
+    rectangle アプリ
+    rectangle ライブラリ_ミドルウェア
+    file DockerFile as DockerFile_Container
+  }
+
+  node Container2 {
+    rectangle アプリ
+    rectangle ライブラリ_ミドルウェア
+    file DockerFile as DockerFile_Container2
+  }
+  node Docker_Engine{
+    node "<color:DodgerBlue><$docker></color>" {
+      rectangle Distribution
+      rectangle Orchestration
+      rectangle Volumes
+      rectangle Containerd
+      rectangle DockerBuild
+      rectangle Networking
+    }
+  }
+  node Linux {
+    rectangle WSLforWindows
+  }
+  node  HostOS {
+    rectangle Windows
+    rectangle MacOS
+    node Linux as LinuxHost {
+      rectangle Ubuntu
+      rectangle Debian
+      rectangle Fedora
+    }
+  }
+  node  Hardware {
+    file Volume
+    rectangle Desctop
+    node MacBook {
+      rectangle Intel
+      rectangle AppleSilicon
+    }
+  }
+  Container --- Docker_Engine
+  Container2 --- Docker_Engine
+  Docker_Engine -- Linux
+  Linux -- HostOS
+  HostOS --- Hardware
+  DockerHub --> Container
+  DockerHub --> Container2
+}
+
+actor DockerCLI
+' node DockerDesctop {
+'   node Docker_Engine as Docker_Engine_DockerDesctop
+'   node Linux as Linux_DockerDesctop
+'   node DockerCompose
+'   node Kubernetes
+' }
+DockerCLI --> Docker_Engine : docker run
+
+@enduml
