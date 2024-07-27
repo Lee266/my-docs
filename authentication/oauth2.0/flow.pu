@@ -1,0 +1,14 @@
+@startuml RFC 6749 OAuth 2.0 Authorization Code Flow
+Actor Resource_Owner
+
+group Tokenの取得方法
+  Client ->> Resource_Owner: 1. Authentication Request
+  Resource_Owner ->> Client: 2. Authentication Response
+  Client ->> Authorization_Server: 3. Authorization Grant
+  Authorization_Server ->> Client: 4. Access Token
+end
+group Tokenの使用法
+  Client ->> Resource_Server: 5. Access Token
+  Resource_Server ->> Client: 6. Protected Resource
+end
+@enduml
