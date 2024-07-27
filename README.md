@@ -6,7 +6,11 @@
 
 ## PlantUML
 
-表示の仕方: ALT + D
+表示の仕方: 
+
+Windows: ALT + D
+
+Mac: optino + D
 
 ## Library
 
