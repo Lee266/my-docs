@@ -17,7 +17,7 @@ rectangle "シングルサインオンを使う場合" {
       Admin -> (IdP): ID: hoge\npassword: hoge
       (IdP) ..> (Use4): ID Token
       (IdP) ..> (Use5): ID Token
-      (IdP) ..> (Use6): ID Tokne
+      (IdP) ..> (Use6): ID Token
   }
 }
 "application1" as (Use)
