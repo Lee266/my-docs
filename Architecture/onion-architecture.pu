@@ -1,0 +1,23 @@
+@startuml Onion Architecture
+title Onion Architecture
+top to bottom direction
+
+rectangle "Infrastructure" as Infrastructure {
+}
+rectangle "Test" as Test {
+}
+rectangle "UI(Presentaiton)" as UI {
+}
+rectangle "Application Service" as ApplicationService {
+}
+rectangle "Domain Service" as DomainService {
+}
+rectangle "Domain Model" as DomainModel {
+}
+
+Infrastructure --> ApplicationService
+Test --> ApplicationService
+UI --> ApplicationService
+ApplicationService --> DomainService
+DomainService --> DomainModel
+@enduml

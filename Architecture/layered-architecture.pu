@@ -1,0 +1,14 @@
+@startuml Layered Architecture
+title Layered Architecture
+top to bottom direction
+
+rectangle "Presentation Layer" as PresentationLayer {
+}
+rectangle "Biziness Logic Layer" as BizinessLogicLayer {
+}
+rectangle "Data Access Layer" as DataAccessLayer {
+}
+PresentationLayer --> BizinessLogicLayer
+BizinessLogicLayer --> DataAccessLayer
+DataAccessLayer ---> BizinessLogicLayer: 変更/影響
+@enduml
