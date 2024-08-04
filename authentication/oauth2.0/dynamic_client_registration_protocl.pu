@@ -1,0 +1,10 @@
+@startuml dynamic_client_registration_protocl
+Client -> Client: client_id, client_secretを持っているか確認
+alt client_idを持っていない
+    Client -> AuthorizationServer: Clientの情報(Client_meta)を送信
+    AuthorizationServer -> Client: client_id, client_secret, Client_metaを返す
+else client_idを持っている
+    Client -> AuthorizationServer: client_id, client_secretを送信
+    AuthorizationServer -> Client: codeを返す
+end
+@enduml

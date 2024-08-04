@@ -1,0 +1,8 @@
+@startuml  oauth flow
+Client -> Authorizatino_Server: Acess Tokenください。
+Authorizatino_Server -> Resource_Owner: 権限与えていい？
+Resource_Owner -> Authorizatino_Server: おk
+Authorizatino_Server -> Client: Acess Token
+Client -> Resource_Server: Resourceをください + Access Token
+Resource_Server -> Client: Protected Resource
+@enduml
