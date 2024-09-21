@@ -1,0 +1,7 @@
+' https://plantuml.com/ja/theme
+@startuml theme
+' !theme sketchy
+!theme reddress-darkorange
+' !theme reddress-darkblue
+' !theme blueprint
+@enduml
