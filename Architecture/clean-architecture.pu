@@ -1,0 +1,17 @@
+@startuml Clean Architecture
+title Clean Architecture
+top to bottom direction
+
+rectangle "Entities" as Entities {
+}
+rectangle "Use Cases" as UseCases {
+}
+rectangle "Interface Adapters" as InterfaceAdapters {
+}
+rectangle "Frameworks & Drivers" as FrameworksAndDrivers {
+}
+
+FrameworksAndDrivers --> InterfaceAdapters
+InterfaceAdapters --> UseCases
+UseCases --> Entities
+@enduml
