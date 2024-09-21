@@ -1,0 +1,40 @@
+@startuml Two Phase Commit Protocol
+participant "Requester" as requester
+participant "Coordinator" as coordinator
+participant "Participant 1" as participant1
+participant "Participant 2" as participant2
+
+== phase 1 ==
+
+activate requester
+requester -> coordinator: Update request
+activate coordinator
+
+coordinator -> participant1: Prepare update
+activate participant1
+
+coordinator -> participant2: Prepare update
+activate participant2
+
+requester -> coordinator: Commit request
+coordinator -> participant1: Can commit?
+coordinator -> participant2: Can commit?
+
+participant1 -> coordinator: Yes, can commit
+participant2 -> coordinator: No, cannot commit
+
+== pahse 2 ==
+
+coordinator -> participant1: Rollback request
+coordinator -> participant2: Rollback request
+
+participant1 -> coordinator: Rolled back
+deactivate participant1
+
+participant2 -> coordinator: Rolled back
+deactivate participant2
+
+deactivate coordinator
+deactivate requester
+
+@enduml
