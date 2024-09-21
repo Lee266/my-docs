@@ -1,0 +1,10 @@
+@startuml refresh-token flow
+client -> authorization_server: 1. Authorization Grant
+authorization_server -> client: 2. Access Token & Refresh Token
+client -> resource_server: 3. Access Token
+resource_server -> client: 4. Protected Resource
+client -> resource_server: 5. Access Token
+resource_server -> client: 6. Invalid Access Token(認証期限切れ)
+client -> authorization_server: 7. Refresh Token
+authorization_server -> client: 8. Access Token & Optional Refresh Token
+@enduml

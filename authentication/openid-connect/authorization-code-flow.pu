@@ -1,0 +1,37 @@
+
+@startuml Authorization Code Flow
+
+Actor "EndUser" as EndUser
+participant "Relaying Party" as RP
+Participant "browser" as UserAgent
+participant "IdP Authorization_endopoint" as IdP_authorization
+participant "IdP Token_endopoint" as IdP_token
+participant "IdP UserinfoEndpoint" as Userinfo
+autonumber ". "
+
+== Start Authorization ==
+EndUser -> RP: Request Authorization\nGET /authorize\nQuery params: {client_id, scope, response_type=code, redirect_uri, state, nonce, prompt}
+RP -> UserAgent: Status: 302, location: /login
+UserAgent -> IdP_authorization: GET /login
+IdP_authorization -> EndUser: Login画面\nStatus: 200
+EndUser -> IdP_authorization: POST /session\n{email, password}
+IdP_authorization -> UserAgent: Status: 302, location: /authorize\nQuery params: {client_id, scope, response_type=code, redirect_uri, state, nonce, prompt}
+UserAgent -> IdP_authorization: Require consent\nGET /authorize\nQuery params: {client_id, scope, response_type=code, redirect_uri, state, nonce, prompt}
+IdP_authorization -> EndUser: Conset画面\nstatus: 200
+EndUser -> IdP_authorization: POST /authorize
+IdP_authorization -> UserAgent: status: 302, location: /login/callback \nQuery params: {code, session_state, state}
+UserAgent -> RP: GET /login/calback\nQuery params: {code, session_state, state}
+RP -> RP: Validates State
+== Start Get Token  ==
+RP -> IdP_token: Token Request\nPOST: /token\nbody:{grant_type: authorization_code, code, redirect_uri, client_id, client_secret}
+IdP_token -> UserAgent: Status:302\nlocation: /login/callback\n{access_token, id_token, refresh_token}
+UserAgent -> RP: Redirect to RP\nGet /login/callback\n{access_token, id_token, refresh_token}
+RP -> RP: Velidates ID Token
+== Start Get Userinfo ==
+RP -> Userinfo: Get UserInfo\nGET /userinfo \nheader: {Authorization: Bearer access_token}
+Userinfo -> UserAgent: Response UserInfo Status:302\nlocation: /login/callback\nBody {sub}
+UserAgent ->  RP: Redirect to RP\nGet /login/callback\nBody {sub}
+RP -> RP: Verify Userinfo
+RP -> EndUser: Login Success
+EndUser -> RP: Login\nGET /[:company]
+@enduml

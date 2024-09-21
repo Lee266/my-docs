@@ -1,0 +1,29 @@
+@startuml SSO
+title シングルサインオンの比較
+
+rectangle "シングルサインオンを使わない場合" {
+  "User" as User
+  User -> (Use): ID: hoge\npassword: hoge
+  User --> (Use2): ID: hogehoge\npassword: hogehoge
+  User --> (Use3): ID: hoge\npassword: hoge
+}
+
+rectangle "シングルサインオンを使う場合" {
+  "Use SSO" as Admin
+  Admin --> (Use4)
+  Admin --> (Use5)
+  Admin --> (Use6)
+  rectangle "IdP" {
+      Admin -> (IdP): ID: hoge\npassword: hoge
+      (IdP) ..> (Use4): ID Token
+      (IdP) ..> (Use5): ID Token
+      (IdP) ..> (Use6): ID Token
+  }
+}
+"application1" as (Use)
+"application2" as (Use2)
+"application3" as (Use3)
+"application1" as (Use4)
+"application2" as (Use5)
+"application3" as (Use6)
+@enduml
