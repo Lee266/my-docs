@@ -126,7 +126,9 @@ Port <number>
 
 # not use password
 - #PasswordAuthentication yes
+- #PermitEmptyPasswords no
 + PasswordAuthentication no
++ PermitEmptyPasswords no
 ```
 
 #### 構文チェック
